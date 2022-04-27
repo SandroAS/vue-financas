@@ -4,11 +4,26 @@ const { getUserId } = require('./../utils')
 
 const JWT_SECRET = process.env.JWT_SECRET
 
-async function createAccount (_, { description }, ctx, info) {
+function createAccount (_, { description }, ctx, info) {
   const userId = getUserId(ctx)
   return ctx.db.mutation.createAccount({
     data: {
       description,
+      user: {
+        connect: {
+          id: userId
+        }
+      }
+    }
+  }, info)
+}
+
+function createCategory (_, { description, operation }, ctx, info) {
+  const userId = getUserId(ctx)
+  return ctx.db.mutation.createCategory({
+    data: {
+      description,
+      operation,
       user: {
         connect: {
           id: userId
@@ -54,7 +69,8 @@ async function signup (_, args, ctx, info) {
 }
 
 module.exports = {
-  signup,
+  createAccount,
+  createCategory,
   login,
-  createAccount
+  signup
 }
