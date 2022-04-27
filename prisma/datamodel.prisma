@@ -35,6 +35,6 @@ type Record {
   tags: String
   note: String
 
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  # createdAt: DateTime!
+  # updatedAt: DateTime!
 }
